@@ -121,7 +121,7 @@ export const WheatherApp = () => {
             {weatherDate.time}
           </Typography>
         </div>
-        <div className="w-full p-5 shadow-lg text-white bg-blue-800 rounded-lg relative z-10">
+        <div className="w-full p-5 shadow-lg text-white bg-blue-600 rounded-lg relative z-10">
           {/* card header */}
           <div className="flex flex-col items-center md:items-end md:flex-row gap-3 mb-3">
             <Typography
