@@ -101,7 +101,7 @@ export const WheatherApp = () => {
     return () => {
       cancelAxios("Component unmounted");
     };
-  }, []);
+  }, [temp]);
 
   return (
     <>
@@ -117,7 +117,7 @@ export const WheatherApp = () => {
               textAlign: "center",
               color: "white",
               position: "relative",
-              top: "-30px",
+              top: "-10px",
             }}
           >
             {weatherDate.time}
