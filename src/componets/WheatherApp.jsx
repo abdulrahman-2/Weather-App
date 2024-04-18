@@ -101,12 +101,12 @@ export const WheatherApp = () => {
     return () => {
       cancelAxios("Component unmounted");
     };
-  }, [temp]);
+  }, []);
 
   return (
     <>
       <div
-        className="flex flex-col justify-center items-center h-screen"
+        className="flex flex-col justify-center items-center w-full h-screen"
         dir={direction}
       >
         <div>
@@ -116,14 +116,12 @@ export const WheatherApp = () => {
               fontWeight: "400",
               textAlign: "center",
               color: "white",
-              position: "relative",
-              top: "-10px",
             }}
           >
             {weatherDate.time}
           </Typography>
         </div>
-        <div className="w-full p-5 shadow-lg text-white bg-blue-900 rounded-lg">
+        <div className="w-full p-5 shadow-lg text-white bg-blue-800 rounded-lg relative z-10">
           {/* card header */}
           <div className="flex flex-col items-center md:items-end md:flex-row gap-3 mb-3">
             <Typography
