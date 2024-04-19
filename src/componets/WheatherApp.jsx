@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import Button from "@mui/material/Button";
 import CloudIcon from "@mui/icons-material/Cloud";
 import { Typography } from "@mui/material";
 
-import { useTranslation } from "react-i18next";
+// Axios //
 import axios from "axios";
 import moment from "moment";
 import "moment/dist/locale/ar";
@@ -14,10 +15,8 @@ export const WheatherApp = () => {
   //  STATES  //
   const [locale, setLocale] = useState("ar");
   const [name, setName] = useState("");
-  const [weatherDate, setWeatherDate] = useState({
-    date: "",
-    time: "",
-  });
+  const [weatherDate, setWeatherDate] = useState();
+  const [weatherTime, setWeatherTime] = useState();
   const [temp, setTemp] = useState({
     number: null,
     min: null,
@@ -35,15 +34,9 @@ export const WheatherApp = () => {
   }, [i18n, locale]);
 
   useEffect(() => {
-    setWeatherDate((prevWeatherDate) => ({
-      ...prevWeatherDate,
-      date: moment().format("MMM Do YY"),
-    }));
+    setWeatherDate(moment().format("MMM Do YY"));
     const intervalId = setInterval(() => {
-      setWeatherDate((prevWeatherDate) => ({
-        ...prevWeatherDate,
-        time: moment().format("LT"),
-      }));
+      setWeatherTime(moment().format("LT"));
     }, 1000);
 
     return () => clearInterval(intervalId);
@@ -54,10 +47,7 @@ export const WheatherApp = () => {
     setLocale(newLocale);
     i18n.changeLanguage(newLocale);
     moment.locale(newLocale);
-    setWeatherDate({
-      ...weatherDate,
-      date: moment().format("MMMM Do YYYY"),
-    });
+    setWeatherDate(moment().format("MMMM Do YYYY"));
   };
 
   useEffect(() => {
@@ -90,11 +80,7 @@ export const WheatherApp = () => {
         setName(name);
       })
       .catch((error) => {
-        if (axios.isCancel(error)) {
-          console.log("Request canceled:", error.message);
-        } else {
-          console.error("Error fetching weather data:", error);
-        }
+        console.log("Request canceled:", error.message);
       });
 
     // Cleanup function to cancel the request when the component unmounts
@@ -118,10 +104,10 @@ export const WheatherApp = () => {
               color: "white",
             }}
           >
-            {weatherDate.time}
+            {weatherTime}
           </Typography>
         </div>
-        <div className="w-full p-5 shadow-lg text-white bg-blue-600 rounded-lg relative z-10">
+        <div className="w-full p-5 shadow-lg text-white bg-blue-700 rounded-lg relative z-10">
           {/* card header */}
           <div className="flex flex-col items-center md:items-end md:flex-row gap-3 mb-3">
             <Typography
@@ -132,7 +118,7 @@ export const WheatherApp = () => {
             >
               {t(name)}
             </Typography>
-            <Typography variant="h5">{weatherDate.date}</Typography>
+            <Typography variant="h5">{weatherDate}</Typography>
           </div>
           {/* == card header == */}
           <hr />
@@ -172,7 +158,7 @@ export const WheatherApp = () => {
           {/* == CONTAINER OF DEGREE + CLOUD ICON == */}
         </div>
         {/* TRANSLATION CONTAINER */}
-        <div className=" w-full text-left mt-2">
+        <div className=" w-full mt-2" dir={direction}>
           <Button
             style={{ color: "white", textTransform: "capitalize" }}
             onClick={handleLangChange}
